@@ -34,9 +34,7 @@ model/
 models/
 
 # Data files (too large for GitHub)
-data/
-datasets/
-*.conll
+
 
 # Logs and outputs
 logs/
