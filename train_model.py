@@ -104,13 +104,11 @@ def tokenize_function(examples, tokenizer):
     )
 
 def compute_metrics(eval_pred):
-    accuracy_metric = evaluate.load("accuracy")
-    f1_metric = evaluate.load("f1")
+    """Compute metrics for evaluation"""
+    metric = evaluate.load("accuracy")
     logits, labels = eval_pred
     predictions = np.argmax(logits, axis=-1)
-    acc = accuracy_metric.compute(predictions=predictions, references=labels)
-    f1 = f1_metric.compute(predictions=predictions, references=labels, average="macro")
-    return {"eval_accuracy": acc["accuracy"], "eval_f1": f1["f1"]}
+    return metric.compute(predictions=predictions, references=labels)
 
 class SaveCheckpointAndDeleteOldCallback(TrainerCallback):
     def on_save(self, args, state, control, **kwargs):
@@ -135,29 +133,28 @@ def main():
         lambda x: tokenize_function(x, tokenizer), batched=True
     )
 
-    model = AutoModelForSequenceClassification.from_pretrained(
-        model_checkpoint, num_labels=len(label_list)
-    )
+    def model_init():
+        return AutoModelForSequenceClassification.from_pretrained(
+            model_checkpoint, num_labels=len(label_list), problem_type="single_label_classification"
+        )
 
     training_args = TrainingArguments(
         output_dir="./results",
-        eval_strategy="epoch",
+        # evaluation_strategy="epoch",
+        save_strategy="epoch",
         learning_rate=2e-5,
         per_device_train_batch_size=16,
         per_device_eval_batch_size=16,
         num_train_epochs=3,
         weight_decay=0.01,
+        # load_best_model_at_end=True,
+        metric_for_best_model="accuracy",
         logging_dir=None,
         report_to=None,  # TensorBoard logging'i devre dışı bırak
         logging_steps=10,
         save_steps=500,
         save_total_limit=1,
     )
-
-    def model_init():
-        return AutoModelForSequenceClassification.from_pretrained(
-            model_checkpoint, num_labels=len(label_list)
-        )
 
     trainer = Trainer(
         model_init=model_init,
@@ -184,22 +181,39 @@ def main():
     best_f1 = 0
     best_run = None
     for run in os.listdir(results_dir):
-        last_checkpoint = os.listdir(os.path.join(results_dir, run))[-1]
+        # Sadece run- ile başlayan klasörleri işle (TensorBoard runs klasörlerini atla)
+        if not run.startswith("run-"):
+            continue
+            
+        run_dir = os.path.join(results_dir, run)
+        if not os.path.isdir(run_dir):
+            continue
+            
+        # Son checkpoint'i bul
+        checkpoints = [d for d in os.listdir(run_dir) if d.startswith("checkpoint-")]
+        if not checkpoints:
+            continue
+            
+        last_checkpoint = max(checkpoints, key=lambda x: int(x.split("-")[1]))
         run_path = os.path.join(results_dir, run, last_checkpoint)
         print(run_path)
+        
         if os.path.isdir(run_path):
             print(f"Evaluating run: {run}")
-            model = AutoModelForSequenceClassification.from_pretrained(run_path)
-            trainer = Trainer(
-                model=model,
-                tokenizer=tokenizer,
-                compute_metrics=compute_metrics,
-            )
-            results = trainer.evaluate(tokenized_datasets["validation"])
-            evaluation_results[run] = results
-            if results["eval_f1"] > best_f1:
-                best_f1 = results["eval_f1"]
-                best_run = run
+            try:
+                model = AutoModelForSequenceClassification.from_pretrained(run_path)
+                trainer = Trainer(
+                    model=model,
+                    tokenizer=tokenizer,
+                    compute_metrics=compute_metrics,
+                )
+                results = trainer.evaluate(tokenized_datasets["validation"])
+                evaluation_results[run] = results
+                if results["eval_accuracy"] > best_f1:
+                    best_f1 = results["eval_accuracy"]
+                    best_run = run
+            except Exception as e:
+                print(f"Error evaluating {run}: {e}")
 
     os.makedirs("statistics", exist_ok=True)
     with open("statistics/hyperparameter_tuning_sonuclari.json", "w") as f:
@@ -208,7 +222,7 @@ def main():
     with open("statistics/best_run.txt", "w") as f:
         f.write(best_run)
 
-    print(f"Best run is {best_run} with F1 score: {best_f1}")
+    print(f"Best run is {best_run} with accuracy: {best_f1}")
 
     last_checkpoint = os.listdir(os.path.join(results_dir, best_run))[-1]
     best_model_path = f"results/{best_run}/{last_checkpoint}"
@@ -216,6 +230,10 @@ def main():
     model = AutoModelForSequenceClassification.from_pretrained(best_model_path)
     model.save_pretrained("model")
     tokenizer.save_pretrained("model")
+
+    # Evaluate on test set
+    test_results = trainer.evaluate(tokenized_datasets["test"])
+    print(f"Test results: {test_results}")
 
 if __name__ == "__main__":
     main()
