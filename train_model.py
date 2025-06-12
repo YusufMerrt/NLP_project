@@ -46,8 +46,8 @@ def read_conll(file_path):
                 line_parts = line.strip().split()
                 if len(line_parts) >= 2:
                     token, tag = line_parts[0], line_parts[1]
-                    sentence.append(token)
-                    label.append(tag)
+                sentence.append(token)
+                label.append(tag)
         if sentence and label:
             full_text = " ".join(sentence)
             if "[SEP]" in full_text:
@@ -136,7 +136,7 @@ def main():
     def model_init():
         return AutoModelForSequenceClassification.from_pretrained(
             model_checkpoint, num_labels=len(label_list), problem_type="single_label_classification"
-        )
+    )
 
     training_args = TrainingArguments(
         output_dir="./results",
@@ -154,7 +154,7 @@ def main():
         logging_steps=10,
         save_steps=500,
         save_total_limit=1,
-    )
+        )
 
     trainer = Trainer(
         model_init=model_init,
