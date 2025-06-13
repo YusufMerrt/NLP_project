@@ -42,10 +42,13 @@ Bu proje, **570K** örnek içeren büyük Türkçe NLI veri setinden **100K** ö
 ### Veri Dağılımı
 
 <!-- VERİ DAĞILIMI GRAFİĞİ BURAYA GELECEKː statistics/data_stats/all_stats/etiket_dagilimi.png -->
+![image](https://github.com/user-attachments/assets/474face5-fbac-45e9-90cd-2432abb7b6d4)
+
 
 ### Cümle Uzunluk Analizi
 
 <!-- UZUNLUK ANALİZİ GRAFİĞİ BURAYA GELECEKː statistics/data_stats/all_stats/uzunluk_karsilastirmasi.png -->
+![image](https://github.com/user-attachments/assets/67fb8885-d6f3-4828-9d6c-156c88c50361)
 
 ## 🛠 Kurulum
 
@@ -133,22 +136,49 @@ Bu script detaylı analiz sağlar:
 ### Performans Metrikleri
 
 <!-- GENEL PERFORMANS METRİKLERİ BURAYA GELECEKː evaluate_model.py çıktısı -->
+## Evaluation Metrics
+
+| Metric | Precision | Recall | F1-Score | Support |
+|--------|-----------|--------|----------|---------|
+| **Class 0** | 0.7744 | 0.7010 | 0.7359 | 3237 |
+| **Class 1** | 0.7781 | 0.7996 | 0.7887 | 3368 |
+| **Class 2** | 0.6633 | 0.7074 | 0.6846 | 3219 |
+| **Macro Avg** | 0.7386 | 0.7360 | 0.7364 | 9824 |
+| **Weighted Avg** | 0.7393 | 0.7369 | 0.7372 | 9824 |
+
+## Additional Metrics
+
+- **Eval Loss:** 0.7286
+- **Eval Accuracy:** 0.7369
+- **Model Preparation Time:** 0.002 sec
+- **Eval Runtime:** 155.3466 sec
+- **Samples per Second:** 63.239
+- **Steps per Second:** 3.952
+
 
 ### Confusion Matrix
 
 <!-- CONFUSION MATRIX GRAFİĞİ BURAYA GELECEKː statistics/confusion_matrix.png -->
+![image](https://github.com/user-attachments/assets/ad9a2f71-a974-4e91-9c04-4bfc81e7125c)
+
 
 ### Sınıf Bazında Performans
 
 <!-- SINIF BAZINDA PERFORMANS GRAFİĞİ BURAYA GELECEKː statistics/per_class_performance.png -->
+![image](https://github.com/user-attachments/assets/3c5d3109-d105-42ec-b615-51b6669928c6)
+
 
 ### Model Öğrenim Analizi
 
 <!-- MODEL ÖĞRENİM ANALİZİ GRAFİĞİ BURAYA GELECEKː statistics/learning_analysis.png -->
+![image](https://github.com/user-attachments/assets/3b0f8a54-b39b-4e72-82a6-377b343c64e4)
+
 
 ### Tahmin Dağılımı
 
 <!-- TAHMİN DAĞILIMI GRAFİĞİ BURAYA GELECEKː statistics/prediction_distribution.png -->
+![image](https://github.com/user-attachments/assets/c9cd352c-1fc2-46f1-bac8-a81b2480f986)
+
 
 ## 🔮 Inference (Tahmin)
 
@@ -229,14 +259,39 @@ kotucumle/
 ### Model Performansı
 
 <!-- MODEL PERFORMANS TABLOSU BURAYA GELECEKː JSON sonuçlarından -->
+**Doğruluk Oranı: 0.7369**
+**Macro F1: 0.7364**
+**Weighted F1: 0.7372**
 
 ### Sınıf Bazında Sonuçlar
 
 <!-- SINIF BAZINDA DETAYLI SONUÇLAR BURAYA GELECEKː -->
+**ENTAILMENT:**
+  - F1-Score: 0.7359
+  - Precision: 0.7744
+  - Recall: 0.7010
+  - Doğru Tahmin: 2269/3237
+  - Öğrenme Kalitesi: Orta
+
+**NEUTRAL:**
+  - F1-Score: 0.7887
+  - Precision: 0.7781
+  - Recall: 0.7996
+  - Doğru Tahmin: 2693/3368
+  - Öğrenme Kalitesi: Orta
+
+**CONTRADICTION:**
+  - F1-Score: 0.6846
+  - Precision: 0.6633
+  - Recall: 0.7074
+  - Doğru Tahmin: 2277/3219
+  - Öğrenme Kalitesi: Orta
 
 ### En İyi ve En Kötü Öğrenilen Sınıflar
 
 <!-- ÖĞRENİM KALİTESİ ANALİZİ BURAYA GELECEKː -->
+**En iyi öğrenilen sınıf: neutral**
+**En zayıf öğrenilen sınıf: entailment**
 
 ## 🎮 Kullanım Örnekleri
 
