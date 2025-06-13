@@ -1,0 +1,15 @@
+Cümle çifti sayısı: 10000
+Toplam premise kelimesi: 105906
+Toplam hypothesis kelimesi: 53824
+Toplam kelime sayısı: 159730
+Ortalama premise uzunluğu: 10.5906
+Ortalama hypothesis uzunluğu: 5.3824
+Maksimum premise uzunluğu: 36
+Maksimum hypothesis uzunluğu: 22
+Minimum premise uzunluğu: 2
+Minimum hypothesis uzunluğu: 1
+Etiket dağılımı:
+  neutral: 3219
+  entailment: 3368
+  contradiction: 3237
+  None: 176
