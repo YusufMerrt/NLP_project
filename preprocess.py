@@ -25,27 +25,37 @@ def convert_to_conll_format(dataset, split, output_file):
 if __name__ == "__main__":
     os.makedirs("data", exist_ok=True)
     
-    # Load Turkish NLI dataset (SNLI-TR) - using only validation and test sets for smaller dataset
-    print("Loading Turkish SNLI dataset (smaller subset)...")
+    # Load Turkish NLI dataset (SNLI-TR) - using subset for 100K examples from 570K total
+    print("Loading Turkish SNLI dataset (570K total available)...")
     raw_dataset = load_dataset("boun-tabi/nli_tr", "snli_tr", trust_remote_code=True)
     
-    # Use only validation and test sets (10K + 10K = 20K examples total)
-    print("Using only validation and test sets to create a smaller dataset...")
+    # Take 100K examples from the large train set (550K available)
+    print("Taking 100K examples from the full dataset...")
 
-    # Convert validation and test to pandas DataFrame
-    validation_df = pd.DataFrame(raw_dataset["validation"])
-    test_df = pd.DataFrame(raw_dataset["test"])
-
-    # Split validation set into train (70%) and validation (30%)
-    val_train_df, val_val_df = train_test_split(validation_df, test_size=0.3, random_state=42, stratify=validation_df['label'])
+    # Convert train set to pandas and sample 100K examples
+    full_train_df = pd.DataFrame(raw_dataset["train"])
     
-    # Use test set as test
+    # Sample 100K examples from 550K train data, maintaining label balance
+    train_sample_df = full_train_df.groupby('label', group_keys=False).apply(
+        lambda x: x.sample(n=min(len(x), 100000//3), random_state=42)
+    ).reset_index(drop=True)
+    
+    # If we don't have enough balanced samples, just take first 100K
+    if len(train_sample_df) < 100000:
+        train_sample_df = full_train_df.sample(n=100000, random_state=42)
+    
+    # Split sampled data into train (80%) and validation (20%)
+    train_df, val_df = train_test_split(train_sample_df, test_size=0.2, random_state=42, 
+                                       stratify=train_sample_df['label'])
+    
+    # Use original test set
     test_df = pd.DataFrame(raw_dataset["test"])
     
-    print(f"New dataset sizes:")
-    print(f"  - Train: {len(val_train_df)} examples (from original validation set)")
-    print(f"  - Validation: {len(val_val_df)} examples (from original validation set)")
+    print(f"Sampled dataset sizes (from 570K total):")
+    print(f"  - Train: {len(train_df)} examples (from 550K train set)")
+    print(f"  - Validation: {len(val_df)} examples (from 550K train set)")
     print(f"  - Test: {len(test_df)} examples (original test set)")
+    print(f"  - Total training data: {len(train_df) + len(val_df)} examples")
     
     # Map labels to our format
     label_mapping = {
@@ -55,12 +65,12 @@ if __name__ == "__main__":
     }
     
     # Apply label mapping
-    for df in [val_train_df, val_val_df, test_df]:
+    for df in [train_df, val_df, test_df]:
         df["label"] = df["label"].map(label_mapping)
 
     # Convert back to Hugging Face Dataset
-    train_dataset = Dataset.from_pandas(val_train_df)
-    validation_dataset = Dataset.from_pandas(val_val_df)
+    train_dataset = Dataset.from_pandas(train_df)
+    validation_dataset = Dataset.from_pandas(val_df)
     test_dataset = Dataset.from_pandas(test_df)
 
     # Create a DatasetDict
