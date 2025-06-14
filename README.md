@@ -1,6 +1,13 @@
-# Turkish Natural Language Inference (NLI) Classification
+# Doğal Dil İşlemeye Giriş Dersi Projesi
+## Turkish Natural Language Inference (NLI) Classification
 
 Bu proje, Türkçe cümle çiftleri arasındaki mantıksal ilişkileri tespit eden bir **Natural Language Inference (Doğal Dil Çıkarımı)** modeli geliştirmektedir. BERT tabanlı derin öğrenme modeli kullanılarak **entailment**, **neutral** ve **contradiction** sınıflarında sınıflandırma yapılır.
+
+### 👥 Proje Ekibi
+- **Yusuf Mert ÖZKUL**
+- **Ceyda Gülen**
+- **Anıl Sürmeli**
+- **Zeynep Eraslan**
 
 ## 📋 İçindekiler
 - [Proje Özeti](#proje-özeti)
@@ -14,30 +21,81 @@ Bu proje, Türkçe cümle çiftleri arasındaki mantıksal ilişkileri tespit ed
 - [Sonuçlar](#sonuçlar)
 - [Kullanım](#kullanım)
 
-## 🎯 Proje Özeti
+## 🎯 Proje Amacı ve Kapsamı
 
-Bu proje, **570K** örnek içeren büyük Türkçe NLI veri setinden **100K** örnek kullanarak eğitilmiş bir doğal dil çıkarımı modelidir. Model, iki cümle arasındaki mantıksal ilişkiyi analiz ederek:
+Bu proje, **Doğal Dil İşlemeye Giriş** dersi kapsamında gerçekleştirilen kapsamlı bir **Natural Language Inference (NLI)** uygulamasıdır. Projenin temel amacı, Türkçe cümle çiftleri arasındaki karmaşık mantıksal ilişkileri tespit etmek ve bu ilişkileri otomatik olarak sınıflandırmaktır.
 
-- **Entailment (Gerektirme)**: İlk cümle ikinci cümleyi mantıksal olarak gerektiriyor
-- **Contradiction (Çelişki)**: İlk cümle ikinci cümle ile çelişiyor  
-- **Neutral (Nötr)**: İlk ve ikinci cümle arasında net bir mantıksal ilişki yok
+### 🎯 Ana Hedefler
+- **Türkçe NLP Gelişimi**: Türkçe doğal dil işleme teknolojilerinin geliştirilmesine katkı sağlamak
+- **Mantıksal Akıl Yürütme**: Bilgisayarların insan benzeri mantıksal çıkarım yapabilmesi için temel oluşturmak
+- **Akademik Araştırma**: Türkçe NLI literatürüne metodolojik ve pratik katkılar sunmak
+- **Uygulamalı Öğrenme**: Modern NLP tekniklerini gerçek veri setleri üzerinde uygulayarak deneyim kazanmak
+
+### 🧠 Doğal Dil Çıkarımı (NLI) Nedir?
+Natural Language Inference, bir **premise** (öncül) cümlesinin verilen bir **hypothesis** (hipotez) cümlesini mantıksal olarak destekleyip desteklemediğini belirleme görevidir:
+
+- **Entailment (Gerektirme)**: Öncül cümle, hipotez cümlesini mantıksal olarak gerektiriyor
+  - *Örnek: "Ali evde çalışıyor" → "Ali evde"*
+- **Contradiction (Çelişki)**: Öncül cümle, hipotez cümlesi ile çelişiyor
+  - *Örnek: "Hava güneşli" → "Yağmur yağıyor"*
+- **Neutral (Nötr)**: Öncül ve hipotez arasında net bir mantıksal ilişki yok
+  - *Örnek: "Kedim çok tatlı" → "Bugün pazartesi"*
 
 ### 🔧 Teknik Özellikler
-- **Base Model**: `dbmdz/bert-base-turkish-cased`
-- **Veri Seti**: `boun-tabi/nli_tr` (SNLI-TR)
-- **Eğitim Verisi**: 100K cümle çifti (570K'dan seçilmiş)
-- **Performans**: Detaylı görsel analiz ve metrikler
+- **Base Model**: `dbmdz/bert-base-turkish-cased` (Türkçe'ye özel BERT)
+- **Veri Seti**: `boun-tabi/nli_tr` (SNLI-TR - Boğaziçi Üniversitesi)
+- **Eğitim Verisi**: 100K+ cümle çifti (570K'dan dengeli örnekleme)
+- **Performans**: %73.69 accuracy ile güçlü sınıflandırma performansı
 
-## 📊 Veri Seti
+## 📊 Veri Seti: SNLI-TR
 
-[SNLI-TR Dataset](https://huggingface.co/datasets/boun-tabi/nli_tr) kullanılmıştır:
+### 🏛️ Kaynak ve Geliştirici Kurum
+**[SNLI-TR Dataset](https://huggingface.co/datasets/boun-tabi/nli_tr)** - Boğaziçi Üniversitesi tarafından geliştirilmiştir.
 
-- **Kaynak**: SNLI'nin profesyonel Türkçe çevirisi
-- **Toplam**: 570,152 cümle çifti
-  - Train: 550,152 örnek
-  - Validation: 10,000 örnek  
-  - Test: 10,000 örnek
-- **Kullanılan**: 100K örnek (dengeli sampling)
+#### 🎓 **Boğaziçi Üniversitesi TABI Laboratuvarı**
+- **Tam Adı**: Text Analytics and BioInformatics Laboratory (TABILAB)
+- **Bağlı Olduğu Kurum**: Boğaziçi Üniversitesi, Bilgisayar Mühendisliği Bölümü
+- **Araştırma Alanları**: Doğal Dil İşleme, Bilgi Çıkarma, Biyoinformatik, Metin Madenciliği
+- **Laboratuvar Liderleri**: Prof. Dr. Tunga Güngör, Prof. Dr. Arzucan Özgür
+
+### 📚 Veri Setinin Oluşturulması
+#### 🔄 **Çeviri Süreci** 
+- **Orijinal Kaynak**: Stanford SNLI (Stanford Natural Language Inference) Corpus
+- **Çeviri Yöntemi**: Amazon Translate kullanılarak otomatik çeviri
+- **Kalite Kontrolü**: Uzman annotator'lar tarafından çeviri kalitesi değerlendirildi
+- **Yayın Tarihi**: 2020 (EMNLP 2020 konferansında sunuldu)
+
+#### 📊 **Veri Boyutları**
+- **Toplam Boyut**: 570,152 cümle çifti
+  - **Train**: 550,152 örnek (büyük eğitim seti)
+  - **Validation**: 10,000 örnek (doğrulama seti)
+  - **Test**: 10,000 örnek (test seti)
+- **Bu Projede Kullanılan**: 110,784 cümle çifti (dengeli örnekleme ile)
+
+#### 🎯 **Sınıf Dağılımı**
+| Sınıf | Açıklama | Örnek Sayısı | Oran |
+|-------|----------|-------------|------|
+| **Entailment** | Mantıksal gerektirme | ~36,700 | %33.1 |
+| **Neutral** | Nötr ilişki | ~36,550 | %33.0 |
+| **Contradiction** | Mantıksal çelişki | ~36,570 | %33.0 |
+| **Geçersiz** | Hatalı etiketler | ~960 | %0.9 |
+
+### 📖 **Akademik Referans**
+```
+@inproceedings{budur-etal-2020-data,
+    title = "Data and Representation for Turkish Natural Language Inference",
+    author = "Budur, Emrah and Özçelik, Rıza and Güngör, Tunga and Potts, Christopher",
+    booktitle = "Proceedings of EMNLP 2020",
+    year = "2020",
+    publisher = "Association for Computational Linguistics"
+}
+```
+
+### 🌍 **Veri Setinin Önemi**
+1. **Türkçe NLP için Kilometre Taşı**: İlk büyük ölçekli Türkçe NLI veri seti
+2. **Uluslararası Standart**: SNLI standardını Türkçe'ye başarıyla adapte etmiştir
+3. **Açık Kaynak**: Araştırmacılar için HuggingFace üzerinden erişilebilir
+4. **Kalite Teyidi**: Profesyonel çeviri ve uzman değerlendirmesi yapılmıştır
 
 ### Veri Dağılımı
 
@@ -296,4 +354,3 @@ Proje hakkında sorularınız için issue açabilir veya iletişime geçebilirsi
 
 ---
 
-**📊 Bu proje, Türkçe doğal dil işleme alanında entailment classification için kapsamlı bir çözüm sunmaktadır.**

@@ -1,7 +1,7 @@
 {
     "evaluation_metrics": {
         "eval_loss": 0.7285871505737305,
-        "eval_model_preparation_time": 0.002,
+        "eval_model_preparation_time": 0.0,
         "eval_0": {
             "precision": 0.7744027303754266,
             "recall": 0.7009576768612913,
@@ -33,9 +33,9 @@
             "f1-score": 0.7371769252315595,
             "support": 9824.0
         },
-        "eval_runtime": 155.3466,
-        "eval_samples_per_second": 63.239,
-        "eval_steps_per_second": 3.952
+        "eval_runtime": 153.5621,
+        "eval_samples_per_second": 63.974,
+        "eval_steps_per_second": 3.998
     },
     "learning_analysis": {
         "class_performance": {
