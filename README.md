@@ -7,7 +7,7 @@ Bu proje, Türkçe cümle çiftleri arasındaki mantıksal ilişkileri tespit ed
 - **Yusuf Mert ÖZKUL** - 21360859057
 - **Ceyda Gülen** - 21360859042
 - **Anıl Sürmeli** - 22360859018
-- **Zeynep Eraslan** - 22360859019
+- **Zeynep Erarslan** - 22360859019
 
 ## 📋 İçindekiler
 - [Proje Özeti](#proje-özeti)
@@ -44,7 +44,7 @@ Natural Language Inference, bir **premise** (öncül) cümlesinin verilen bir **
 ### 🔧 Teknik Özellikler
 - **Base Model**: `dbmdz/bert-base-turkish-cased` (Türkçe'ye özel BERT)
 - **Veri Seti**: `boun-tabi/nli_tr` (SNLI-TR - Boğaziçi Üniversitesi)
-- **Eğitim Verisi**: 100K+ cümle çifti (570K'dan dengeli örnekleme)
+- **Eğitim Verisi**: 110K+ cümle çifti (570K'dan dengeli örnekleme)
 - **Performans**: %82.56 accuracy ile üstün sınıflandırma performansı
 
 ## 📊 Veri Seti: SNLI-TR
