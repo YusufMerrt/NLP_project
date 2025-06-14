@@ -4,10 +4,10 @@
 Bu proje, Türkçe cümle çiftleri arasındaki mantıksal ilişkileri tespit eden bir **Natural Language Inference (Doğal Dil Çıkarımı)** modeli geliştirmektedir. BERT tabanlı derin öğrenme modeli kullanılarak **entailment**, **neutral** ve **contradiction** sınıflarında sınıflandırma yapılır.
 
 ### 👥 Proje Ekibi
-- **Yusuf Mert ÖZKUL**
-- **Ceyda Gülen**
-- **Anıl Sürmeli**
-- **Zeynep Eraslan**
+- **Yusuf Mert ÖZKUL** - 21360859057
+- **Ceyda Gülen** - 21360859042
+- **Anıl Sürmeli** - 22360859018
+- **Zeynep Eraslan** - 22360859019
 
 ## 📋 İçindekiler
 - [Proje Özeti](#proje-özeti)
@@ -45,7 +45,7 @@ Natural Language Inference, bir **premise** (öncül) cümlesinin verilen bir **
 - **Base Model**: `dbmdz/bert-base-turkish-cased` (Türkçe'ye özel BERT)
 - **Veri Seti**: `boun-tabi/nli_tr` (SNLI-TR - Boğaziçi Üniversitesi)
 - **Eğitim Verisi**: 100K+ cümle çifti (570K'dan dengeli örnekleme)
-- **Performans**: %73.69 accuracy ile güçlü sınıflandırma performansı
+- **Performans**: %82.56 accuracy ile üstün sınıflandırma performansı
 
 ## 📊 Veri Seti: SNLI-TR
 
@@ -99,11 +99,18 @@ Natural Language Inference, bir **premise** (öncül) cümlesinin verilen bir **
 
 ### Veri Dağılımı
 
-<!-- VERİ DAĞILIMI GRAFİĞİ BURAYA GELECEKː statistics/data_stats/all_stats/etiket_dagilimi.png -->
+**Dengeli Etiket Dağılımı:**
+![Veri Dağılımı](statistics/data_stats/all_stats/etiket_dagilimi.png)
+
+*110K+ cümle çifti - %33 dengeli dağılım*
+
 
 ### Cümle Uzunluk Analizi
 
-<!-- UZUNLUK ANALİZİ GRAFİĞİ BURAYA GELECEKː statistics/data_stats/all_stats/uzunluk_karsilastirmasi.png -->
+**Premise vs Hypothesis Uzunluk Karşılaştırması:**
+![Uzunluk Analizi](statistics/data_stats/all_stats/uzunluk_karsilastirmasi.png)
+
+*Ortalama: Premise 9.85 kelime, Hypothesis 5.30 kelime*
 
 ## 🛠 Kurulum
 
@@ -191,22 +198,57 @@ Bu script detaylı analiz sağlar:
 ### Performans Metrikleri
 
 <!-- GENEL PERFORMANS METRİKLERİ BURAYA GELECEKː evaluate_model.py çıktısı -->
+## Evaluation Metrics
+
+| Metric | Precision | Recall | F1-Score | Support |
+|--------|-----------|--------|----------|---------|
+| **Entailment (Class 0)** | 0.8364 | 0.8560 | 0.8461 | 3237 |
+| **Neutral (Class 1)** | 0.8611 | 0.8391 | 0.8499 | 3368 |
+| **Contradiction (Class 2)** | 0.7786 | 0.7810 | 0.7798 | 3219 |
+| **Macro Avg** | 0.8253 | 0.8254 | 0.8253 | 9824 |
+| **Weighted Avg** | 0.8259 | 0.8256 | 0.8257 | 9824 |
+
+## Additional Metrics
+
+- **Eval Loss:** 0.7286
+- **Eval Accuracy:** 0.8256 (82.56%)
+- **Model Preparation Time:** 0.000 sec
+- **Eval Runtime:** 153.56 sec
+- **Samples per Second:** 63.97
+- **Steps per Second:** 3.998
+
 
 ### Confusion Matrix
 
-<!-- CONFUSION MATRIX GRAFİĞİ BURAYA GELECEKː statistics/confusion_matrix.png -->
+**Güncel Confusion Matrix Analizi:**
+![Confusion Matrix](statistics/confusion_matrix.png)
+
+*Model sınıflandırma performansının detaylı analizi - Güncel verilerle*
+
 
 ### Sınıf Bazında Performans
 
-<!-- SINIF BAZINDA PERFORMANS GRAFİĞİ BURAYA GELECEKː statistics/per_class_performance.png -->
+**Güncel Sınıf Performans Analizi:**
+![Sınıf Bazında Performans](statistics/per_class_performance.png)
+
+*Precision, Recall ve F1-Score metrikleri - %82+ performans*
+
 
 ### Model Öğrenim Analizi
 
-<!-- MODEL ÖĞRENİM ANALİZİ GRAFİĞİ BURAYA GELECEKː statistics/learning_analysis.png -->
+**Güncel Öğrenim Kalitesi Analizi:**
+![Model Öğrenim Analizi](statistics/learning_analysis.png)
+
+*Sınıf bazında öğrenim kalitesi - 2 sınıf "İyi", 1 sınıf "Orta"*
+
 
 ### Tahmin Dağılımı
 
-<!-- TAHMİN DAĞILIMI GRAFİĞİ BURAYA GELECEKː statistics/prediction_distribution.png -->
+**Güncel Tahmin Dağılım Analizi:**
+![Tahmin Dağılımı](statistics/prediction_distribution.png)
+
+*Model tahmin dağılımı vs gerçek etiket dağılımı - Minimal bias (±0.86%)*
+
 
 ## 🔮 Inference (Tahmin)
 
@@ -286,15 +328,41 @@ kotucumle/
 
 ### Model Performansı
 
-<!-- MODEL PERFORMANS TABLOSU BURAYA GELECEKː JSON sonuçlarından -->
+**🎯 Final Sonuçlar:**
+- **Doğruluk Oranı:** 82.56% (↑8.87% artış)
+- **Macro F1:** 82.53% (↑8.89% artış)
+- **Weighted F1:** 82.57% (↑8.85% artış)
+- **Evaluation Loss:** 0.729
+- **Inference Hızı:** 63.97 örnek/saniye
 
 ### Sınıf Bazında Sonuçlar
 
-<!-- SINIF BAZINDA DETAYLI SONUÇLAR BURAYA GELECEKː -->
+**🏆 ENTAILMENT (En İyi Sınıf):**
+  - F1-Score: 84.61% (↑11.02% artış)
+  - Precision: 83.64%
+  - Recall: 85.60%
+  - Doğru Tahmin: 2,771/3,237
+  - Öğrenme Kalitesi: **İyi**
+
+**⭐ NEUTRAL:**
+  - F1-Score: 84.99% (↑6.12% artış)
+  - Precision: 86.11%
+  - Recall: 83.91%
+  - Doğru Tahmin: 2,826/3,368
+  - Öğrenme Kalitesi: **İyi**
+
+**📊 CONTRADICTION:**
+  - F1-Score: 77.98% (↑9.52% artış)
+  - Precision: 77.86%
+  - Recall: 78.10%
+  - Doğru Tahmin: 2,514/3,219
+  - Öğrenme Kalitesi: **Orta**
 
 ### En İyi ve En Kötü Öğrenilen Sınıflar
 
-<!-- ÖĞRENİM KALİTESİ ANALİZİ BURAYA GELECEKː -->
+**🥇 En iyi öğrenilen sınıf:** Entailment (85.60% accuracy)
+**🥉 En zayıf öğrenilen sınıf:** Contradiction (78.10% accuracy)
+**📈 Performans farkı:** Sadece 7.50% (çok dengeli model)
 
 ## 🎮 Kullanım Örnekleri
 
@@ -347,6 +415,20 @@ Sonuç: NEUTRAL
 - [NLI-TR Paper](https://aclanthology.org/2020.emnlp-main.695/)
 - [Turkish BERT Model](https://huggingface.co/dbmdz/bert-base-turkish-cased)
 - [Transformers Library](https://github.com/huggingface/transformers)
+
+## 🏆 Final Performans Özeti
+
+| Kategori | Sonuç | Açıklama |
+|----------|--------|----------|
+| **Model Türü** | BERT-based Classification | Turkish BERT fine-tuned |
+| **Veri Boyutu** | 110,784+ cümle çifti | 570K'dan stratified sampling |
+| **Final Accuracy** | **82.56%** | Test seti üzerinde (↑8.87%) |
+| **En İyi F1-Score** | **84.99%** | Neutral sınıfı (↑6.12%) |
+| **Macro F1-Score** | **82.53%** | Genel performans |
+| **En İyi Sınıf** | Entailment (85.60%) | Gerektirme ilişkileri |
+| **Inference Hızı** | 63.97 örnek/saniye | Test seti üzerinde |
+| **Bias Level** | Minimal (±0.86%) | Çok dengeli model |
+| **Production Ready** | ✅ Evet | Yüksek güvenilirlik |
 
 ## 📞 İletişim
 

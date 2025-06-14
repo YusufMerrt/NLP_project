@@ -27,11 +27,11 @@ env/
 ENV/
 
 # Model files (too large for GitHub)
-*.pt
-*.safetensors
-*.bin
-model/
-models/
+#*.pt
+#*.safetensors
+#*.bin
+#model/
+#models/
 
 # Data files (too large for GitHub)
 
