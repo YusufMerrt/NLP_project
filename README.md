@@ -99,18 +99,11 @@ Natural Language Inference, bir **premise** (öncül) cümlesinin verilen bir **
 
 ### Veri Dağılımı
 
-**Dengeli Etiket Dağılımı:**
-![Veri Dağılımı](statistics/data_stats/all_stats/etiket_dagilimi.png)
-
-*110K+ cümle çifti - %33 dengeli dağılım*
-
+<!-- VERİ DAĞILIMI GRAFİĞİ BURAYA GELECEKː statistics/data_stats/all_stats/etiket_dagilimi.png -->
 
 ### Cümle Uzunluk Analizi
 
-**Premise vs Hypothesis Uzunluk Karşılaştırması:**
-![Uzunluk Analizi](statistics/data_stats/all_stats/uzunluk_karsilastirmasi.png)
-
-*Ortalama: Premise 9.85 kelime, Hypothesis 5.30 kelime*
+<!-- UZUNLUK ANALİZİ GRAFİĞİ BURAYA GELECEKː statistics/data_stats/all_stats/uzunluk_karsilastirmasi.png -->
 
 ## 🛠 Kurulum
 
@@ -198,57 +191,22 @@ Bu script detaylı analiz sağlar:
 ### Performans Metrikleri
 
 <!-- GENEL PERFORMANS METRİKLERİ BURAYA GELECEKː evaluate_model.py çıktısı -->
-## Evaluation Metrics
-
-| Metric | Precision | Recall | F1-Score | Support |
-|--------|-----------|--------|----------|---------|
-| **Entailment (Class 0)** | 0.8364 | 0.8560 | 0.8461 | 3237 |
-| **Neutral (Class 1)** | 0.8611 | 0.8391 | 0.8499 | 3368 |
-| **Contradiction (Class 2)** | 0.7786 | 0.7810 | 0.7798 | 3219 |
-| **Macro Avg** | 0.8253 | 0.8254 | 0.8253 | 9824 |
-| **Weighted Avg** | 0.8259 | 0.8256 | 0.8257 | 9824 |
-
-## Additional Metrics
-
-- **Eval Loss:** 0.7286
-- **Eval Accuracy:** 0.8256 (82.56%)
-- **Model Preparation Time:** 0.000 sec
-- **Eval Runtime:** 153.56 sec
-- **Samples per Second:** 63.97
-- **Steps per Second:** 3.998
-
 
 ### Confusion Matrix
 
-**Güncel Confusion Matrix Analizi:**
-![Confusion Matrix](statistics/confusion_matrix.png)
-
-*Model sınıflandırma performansının detaylı analizi - Güncel verilerle*
-
+<!-- CONFUSION MATRIX GRAFİĞİ BURAYA GELECEKː statistics/confusion_matrix.png -->
 
 ### Sınıf Bazında Performans
 
-**Güncel Sınıf Performans Analizi:**
-![Sınıf Bazında Performans](statistics/per_class_performance.png)
-
-*Precision, Recall ve F1-Score metrikleri - %82+ performans*
-
+<!-- SINIF BAZINDA PERFORMANS GRAFİĞİ BURAYA GELECEKː statistics/per_class_performance.png -->
 
 ### Model Öğrenim Analizi
 
-**Güncel Öğrenim Kalitesi Analizi:**
-![Model Öğrenim Analizi](statistics/learning_analysis.png)
-
-*Sınıf bazında öğrenim kalitesi - 2 sınıf "İyi", 1 sınıf "Orta"*
-
+<!-- MODEL ÖĞRENİM ANALİZİ GRAFİĞİ BURAYA GELECEKː statistics/learning_analysis.png -->
 
 ### Tahmin Dağılımı
 
-**Güncel Tahmin Dağılım Analizi:**
-![Tahmin Dağılımı](statistics/prediction_distribution.png)
-
-*Model tahmin dağılımı vs gerçek etiket dağılımı - Minimal bias (±0.86%)*
-
+<!-- TAHMİN DAĞILIMI GRAFİĞİ BURAYA GELECEKː statistics/prediction_distribution.png -->
 
 ## 🔮 Inference (Tahmin)
 
@@ -328,41 +286,15 @@ kotucumle/
 
 ### Model Performansı
 
-**🎯 Final Sonuçlar:**
-- **Doğruluk Oranı:** 82.56% (↑8.87% artış)
-- **Macro F1:** 82.53% (↑8.89% artış)
-- **Weighted F1:** 82.57% (↑8.85% artış)
-- **Evaluation Loss:** 0.729
-- **Inference Hızı:** 63.97 örnek/saniye
+<!-- MODEL PERFORMANS TABLOSU BURAYA GELECEKː JSON sonuçlarından -->
 
 ### Sınıf Bazında Sonuçlar
 
-**🏆 ENTAILMENT (En İyi Sınıf):**
-  - F1-Score: 84.61% (↑11.02% artış)
-  - Precision: 83.64%
-  - Recall: 85.60%
-  - Doğru Tahmin: 2,771/3,237
-  - Öğrenme Kalitesi: **İyi**
-
-**⭐ NEUTRAL:**
-  - F1-Score: 84.99% (↑6.12% artış)
-  - Precision: 86.11%
-  - Recall: 83.91%
-  - Doğru Tahmin: 2,826/3,368
-  - Öğrenme Kalitesi: **İyi**
-
-**📊 CONTRADICTION:**
-  - F1-Score: 77.98% (↑9.52% artış)
-  - Precision: 77.86%
-  - Recall: 78.10%
-  - Doğru Tahmin: 2,514/3,219
-  - Öğrenme Kalitesi: **Orta**
+<!-- SINIF BAZINDA DETAYLI SONUÇLAR BURAYA GELECEKː -->
 
 ### En İyi ve En Kötü Öğrenilen Sınıflar
 
-**🥇 En iyi öğrenilen sınıf:** Entailment (85.60% accuracy)
-**🥉 En zayıf öğrenilen sınıf:** Contradiction (78.10% accuracy)
-**📈 Performans farkı:** Sadece 7.50% (çok dengeli model)
+<!-- ÖĞRENİM KALİTESİ ANALİZİ BURAYA GELECEKː -->
 
 ## 🎮 Kullanım Örnekleri
 
